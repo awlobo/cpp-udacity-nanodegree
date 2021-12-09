@@ -27,6 +27,39 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
     return std::move(contents);
 }
 
+template <class T>
+bool check_range(T value, T min, T max)
+{
+    return (value >= min) && (value <= max);
+}
+
+std::vector<int> get_input()
+{
+    std::vector<int> points(4);
+    std::vector<std::string> points_string={"start x", "start y", "end x", "end y"};
+    for (int i = 0; i < 4; i++)
+    {
+        do
+        {
+            std::cout << "Please enter a " << points_string[i] << " between 0 and 100." << std::endl;
+            std::cin >> points[i];
+        } while (!check_range(points[i], 0, 100));
+    }
+
+    return points;
+}
+
+std::vector<int> generate_random_input()
+{
+    srand (time(NULL));
+    std::vector<int> points(4);
+    for (int i = 0; i < 4; i++)
+    {
+        points[i] = rand() % 100;
+    }
+    return points;
+}
+
 int main(int argc, const char **argv)
 {
     std::string osm_data_file = "";
@@ -55,8 +88,10 @@ int main(int argc, const char **argv)
             osm_data = std::move(*data);
     }
 
-    float start_x, start_y, end_x, end_y;
-    std::cin >> start_x >> start_y >> end_x >> end_y;
+    // auto input = get_input();
+    auto input = generate_random_input();
+
+    float start_x = input[0], start_y = input[1], end_x = input[2], end_y = input[3];
 
     // Build Model.
     RouteModel model{osm_data};

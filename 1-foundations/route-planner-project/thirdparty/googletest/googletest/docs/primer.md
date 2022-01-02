@@ -169,7 +169,7 @@ you'll get a compiler error. We used to require the arguments to support the
 `<<` is supported, it will be called to print the arguments when the assertion
 fails; otherwise googletest will attempt to print them in the best way it can.
 For more details and how to customize the printing of the arguments, see
-gMock [recipe](../../googlemock/docs/CookBook.md#teaching-google-mock-how-to-print-your-values).).
+gMock [recipe](CookBook.md#teaching-google-mock-how-to-print-your-values).).
 
 These assertions can work with a user-defined type, but only if you define the
 corresponding comparison operator (e.g. `==`, `<`, etc). Since this is
@@ -470,8 +470,7 @@ If a fatal failure happens the subsequent steps will be skipped.
 > return the value of `RUN_ALL_TESTS()`.
 >
 > Also, you should call `RUN_ALL_TESTS()` only **once**. Calling it more than
-> once conflicts with some advanced googletest features (e.g. thread-safe [death
-> tests](advanced.md#death-tests)) and thus is not supported.
+> once conflicts with some advanced googletest features (e.g. thread-safe [](advanced.md#death-tests)) and thus is not supported.
 
 **Availability**: Linux, Windows, Mac.
 

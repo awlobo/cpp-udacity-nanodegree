@@ -53,23 +53,23 @@ the Apache License, which is different from Google Mock's license.
 If you are new to the project, we suggest that you read the user
 documentation in the following order:
 
-  * Learn the [basics](../googletest/docs/primer.md) of
+  * Learn the [basics](primer.md) of
     Google Test, if you choose to use Google Mock with it (recommended).
-  * Read [Google Mock for Dummies](../googlemock/docs/ForDummies.md).
+  * Read [Google Mock for Dummies](ForDummies.md).
   * Read the instructions below on how to build Google Mock.
 
 You can also watch Zhanyong's [talk](http://www.youtube.com/watch?v=sYpCyLI47rM) on Google Mock's usage and implementation.
 
 Once you understand the basics, check out the rest of the docs:
 
-  * [CheatSheet](../googlemock/docs/CheatSheet.md) - all the commonly used stuff
+  * [CheatSheet](CheatSheet.md) - all the commonly used stuff
     at a glance.
-  * [CookBook](../googlemock/docs/CookBook.md) - recipes for getting things done,
+  * [CookBook](CookBook.md) - recipes for getting things done,
     including advanced techniques.
 
 If you need help, please check the
-[KnownIssues](docs/KnownIssues.md) and
-[FrequentlyAskedQuestions](docs/FrequentlyAskedQuestions.md) before
+[KnownIssues](KnownIssues.md) and
+[FrequentlyAskedQuestions](FrequentlyAskedQuestions.md) before
 posting a question on the
 [discussion group](http://groups.google.com/group/googlemock).
 
@@ -79,7 +79,7 @@ posting a question on the
 Google Mock is not a testing framework itself.  Instead, it needs a
 testing framework for writing tests.  Google Mock works seamlessly
 with [Google Test](https://github.com/google/googletest), but
-you can also use it with [any C++ testing framework](../googlemock/docs/ForDummies.md#using-google-mock-with-any-testing-framework).
+you can also use it with [any C++ testing framework](ForDummies.md#using-google-mock-with-any-testing-framework).
 
 ### Requirements for End Users ###
 
@@ -90,7 +90,7 @@ You must use the bundled version of Google Test when using Google Mock.
 You can also easily configure Google Mock to work with another testing
 framework, although it will still need Google Test.  Please read
 ["Using_Google_Mock_with_Any_Testing_Framework"](
-    ../googlemock/docs/ForDummies.md#using-google-mock-with-any-testing-framework)
+    ForDummies.md#using-google-mock-with-any-testing-framework)
 for instructions.
 
 Google Mock depends on advanced C++ features and thus requires a more
@@ -214,7 +214,7 @@ following commands should succeed:
     ./gmock_test
 
 If you see errors, try to tweak the contents of
-[make/Makefile](make/Makefile) to make them go away.
+[Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googlemock/make/Makefile](Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googlemock/make/Makefile) to make them go away.
 
 ### Windows ###
 
@@ -244,7 +244,7 @@ or 0 to enable or disable a certain feature.
 
 We list the most frequently used macros below.  For a complete list,
 see file [${GTEST\_DIR}/include/gtest/internal/gtest-port.h](
-../googletest/include/gtest/internal/gtest-port.h).
+Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googletest/include/gtest/internal/gtest-port.h).
 
 ### As a Shared Library (DLL) ###
 
@@ -277,13 +277,13 @@ Library](#choosing-a-tr1-tuple-library)".
 On platforms where the pthread library is available, Google Test and
 Google Mock use it in order to be thread-safe.  For this to work, you
 may need to tweak your compiler and/or linker flags.  Please see the
-"[Multi-threaded Tests](../googletest/README.md#multi-threaded-tests)" section in file Google Test's README for what you may need to do.
+"[Multi-threaded Tests](Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googletest/README.md#multi-threaded-tests)" section in file Google Test's README for what you may need to do.
 
 If you have custom matchers defined using `MatcherInterface` or
 `MakePolymorphicMatcher()`, you'll need to update their definitions to
 use the new matcher API (
-[monomorphic](./docs/CookBook.md#writing-new-monomorphic-matchers),
-[polymorphic](./docs/CookBook.md#writing-new-polymorphic-matchers)).
+[monomorphic](CookBook.md#writing-new-monomorphic-matchers),
+[polymorphic](CookBook.md#writing-new-polymorphic-matchers)).
 Matchers defined using `MATCHER()` or `MATCHER_P*()` aren't affected.
 
 Happy testing!

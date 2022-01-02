@@ -2821,7 +2821,7 @@ and you should see an `OUTPUT_DIR` directory being created with files
 These three files contain everything you need to use Google Mock (and
 Google Test).  Just copy them to anywhere you want and you are ready
 to write tests and use mocks.  You can use the
-[make/Makefile](../make/Makefile) file as an example on how to compile your tests
+[make/Makefile](Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googlemock/make/Makefile) file as an example on how to compile your tests
 against them.
 
 # Extending Google Mock #
@@ -3655,6 +3655,6 @@ This printer knows how to print built-in C++ types, native arrays, STL
 containers, and any type that supports the `<<` operator.  For other
 types, it prints the raw bytes in the value and hopes that you the
 user can figure it out.
-[Google Test's advanced guide](../../googletest/docs/advanced.md#teaching-googletest-how-to-print-your-values)
+[Google Test's advanced guide](advanced.md#teaching-googletest-how-to-print-your-values)
 explains how to extend the printer to do a better job at
 printing your particular type than to dump the bytes.

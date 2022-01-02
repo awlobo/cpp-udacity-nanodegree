@@ -105,7 +105,7 @@ You don't need to define these mock methods somewhere else - the `MOCK_METHOD*` 
 tool requires that you have Python 2.4 installed.  You give it a C++ file and the name of an abstract class defined in it,
 and it will print the definition of the mock class for you.  Due to the
 complexity of the C++ language, this script may not always work, but
-it can be quite handy when it does.  For more details, read the [user documentation](../scripts/generator/README).
+it can be quite handy when it does.  For more details, read the [user documentation](README).
 
 ## Where to Put It ##
 When you define a mock class, you need to decide where to put its definition. Some people put it in a `*_test.cc`. This is fine when the interface being mocked (say, `Foo`) is owned by the same person or team. Otherwise, when the owner of `Foo` changes it, your test could break. (You can't really expect `Foo`'s maintainer to fix every test that uses `Foo`, can you?)
@@ -187,7 +187,7 @@ sometimes causes the test program to crash.  You'll still be able to
 notice that the test has failed, but it's not a graceful failure.
 
 A better solution is to use Google Test's
-[event listener API](../../googletest/docs/advanced.md#extending-googletest-by-handling-test-events)
+[event listener API](advanced.md#extending-googletest-by-handling-test-events)
 to report a test failure to your testing framework properly.  You'll need to
 implement the `OnTestPartResult()` method of the event listener interface, but it
 should be straightforward.

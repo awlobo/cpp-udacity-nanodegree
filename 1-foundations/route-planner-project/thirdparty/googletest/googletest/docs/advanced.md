@@ -394,14 +394,14 @@ using ::testing::StartsWith;
     EXPECT_THAT(Foo(), StartsWith("Hello"));
 ```
 
-Read this [recipe](../../googlemock/docs/CookBook.md#using-matchers-in-google-test-assertions) in
+Read this [recipe](CookBook.md#using-matchers-in-google-test-assertions) in
 the gMock Cookbook for more details.
 
 gMock has a rich set of matchers. You can do many things googletest cannot do
 alone with them. For a list of matchers gMock provides, read
-[this](../../googlemock/docs/CookBook.md#using-matchers). Especially useful among them are
+[this](CookBook.md#using-matchers). Especially useful among them are
 some [protocol buffer matchers](https://github.com/google/nucleus/blob/master/nucleus/testing/protocol-buffer-matchers.h). It's easy to write
-your [own matchers](../../googlemock/docs/CookBook.md#writing-new-matchers-quickly) too.
+your [own matchers](CookBook.md#writing-new-matchers-quickly) too.
 
 For example, you can use gMock's
 [EqualsProto](https://github.com/google/nucleus/blob/master/nucleus/testing/protocol-buffer-matchers.h)
@@ -425,7 +425,7 @@ and you're ready to go.
 
 (Please read the [previous](#asserting-using-gmock-matchers) section first if you haven't.)
 
-You can use the gMock [string matchers](../../googlemock/docs/CheatSheet.md#string-matchers)
+You can use the gMock [string matchers](CheatSheet.md#string-matchers)
 with `EXPECT_THAT()` or `ASSERT_THAT()` to do more string comparison tricks
 (sub-string, prefix, suffix, regular expression, and etc). For example,
 

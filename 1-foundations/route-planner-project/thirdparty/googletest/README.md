@@ -20,13 +20,13 @@ Please the mailing list at googletestframework@googlegroups.com for questions, d
 There is also an IRC channel on [OFTC](https://webchat.oftc.net/) (irc.oftc.net) #gtest available.  
 
 Getting started information for **Google Test** is available in the
-[Google Test Primer](googletest/docs/primer.md) documentation.
+[Google Test Primer](primer.md) documentation.
 
 **Google Mock** is an extension to Google Test for writing and using C++ mock
-classes.  See the separate [Google Mock documentation](googlemock/README.md).
+classes.  See the separate [Google Mock documentation](Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/googlemock/README.md).
 
 More detailed documentation for googletest (including build instructions) are
-in its interior [googletest/README.md](googletest/README.md) file.
+in its interior [googletest/README.md](Dev/Backend/C++/cpp-nanodegree/src/1-foundations/route-planner-project/thirdparty/googletest/README.md) file.
 
 ## Features ##
 

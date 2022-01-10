@@ -2,8 +2,8 @@
 #define PROCESSOR_H
 
 class Processor {
- public:
-  float Utilization();  // DONE: See src/processor.cpp
+public:
+    float Utilization();
 };
 
 #endif

@@ -1,3 +1,4 @@
+// DONE: Declare any necessary private members
 #ifndef FORMAT_H
 #define FORMAT_H
 

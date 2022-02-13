@@ -1,32 +1,29 @@
 #include <iostream>
 #include <thread>
-#include <chrono>
-#include <random>
-#include <vector>
+
+void printMessage(std::string message)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(10)); // simulate work
+    std::cout << "Thread 1: " << message << std::endl;
+}
 
 int main()
 {
-    // create threads
-    std::vector<std::thread> threads;
-    for (size_t i = 0; i < 10; ++i)
-    {
-        // create new thread from a Lambda
-        threads.emplace_back([i]()
-                             {
-                                 // wait for certain amount of time
-                                 std::this_thread::sleep_for(std::chrono::milliseconds(10 * i));
+    // define message
+    std::string message = "My Message";
 
-                                 // perform work
-                                 std::cout << "Hello from Worker thread #" << i << std::endl;
-                             });
-    }
+    // start thread using variadic templates
+    std::thread t1(printMessage, message);
 
-    // do something in main()
-    std::cout << "Hello from Main thread" << std::endl;
+    // start thread using a Lambda
+    std::thread t2([message] {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10)); // simulate work
+        std::cout << "Thread 2: " << message << std::endl;
+    });
 
-    // call join on all thread objects using a range-based loop
-    for (auto &t : threads)
-        t.join();
+    // thread barrier
+    t1.join();
+    t2.join();
 
     return 0;
 }

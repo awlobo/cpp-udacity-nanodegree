@@ -1,6 +1,9 @@
 #ifndef STREET_H
 #define STREET_H
 
+#include <thread>
+#include <memory>
+
 #include "TrafficObject.h"
 
 // forward declaration to avoid include cycle

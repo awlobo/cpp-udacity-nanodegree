@@ -1,3 +1,10 @@
 {
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cSpell.words": [
+        "chrono"
+    ],
+    "files.associations": {
+        "concourse-pipeline-yaml": "**/*template.yml|**/pipelines/*.yml",
+        "iostream": "cpp"
+    }
 }

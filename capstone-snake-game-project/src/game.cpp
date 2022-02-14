@@ -26,9 +26,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
         frame_start = SDL_GetTicks();
 
         // Input, Update, Render - the main game loop.
-        controller.HandleInput(running, snake);
+        controller.HandleInput(running, snake, *this);
         Update();
-        renderer.Render(snake, food);
+        renderer.Render(snake, food, *this);
 
         frame_end = SDL_GetTicks();
 
@@ -40,7 +40,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
         // After every second, update the window title.
         if (frame_end - title_timestamp >= 1000)
         {
-            renderer.UpdateWindowTitle(score, frame_count);
+            renderer.UpdateWindowTitle(_score, frame_count);
             frame_count = 0;
             title_timestamp = frame_end;
         }
@@ -75,8 +75,15 @@ void Game::PlaceFood()
 
 void Game::Update()
 {
-    if (!snake.alive)
+    if (IsPaused())
+    {
         return;
+    }
+
+    if (!snake.IsAlive())
+    {
+        return;
+    }
 
     snake.Update();
 
@@ -86,7 +93,7 @@ void Game::Update()
     // Check if there's food over here
     if (food.x == new_x && food.y == new_y)
     {
-        score++;
+        _score++;
         PlaceFood();
         // Grow snake and increase speed.
         snake.GrowBody();
@@ -94,5 +101,16 @@ void Game::Update()
     }
 }
 
-int Game::GetScore() const { return score; }
+void Game::Pause()
+{
+    _paused = true;
+}
+
+void Game::Resume()
+{
+    _paused = false;
+}
+
+int Game::GetScore() const { return _score; }
 int Game::GetSize() const { return snake.size; }
+bool Game::IsPaused() const { return _paused; }

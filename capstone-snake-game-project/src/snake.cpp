@@ -43,8 +43,8 @@ void Snake::UpdateHead()
     }
 
     // Wrap the Snake around to the beginning if going off of the screen.
-    head_x = fmod(head_x + grid_width, grid_width);
-    head_y = fmod(head_y + grid_height, grid_height);
+    head_x = fmod(head_x + _grid_width, _grid_width);
+    head_y = fmod(head_y + _grid_height, _grid_height);
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
@@ -52,14 +52,14 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
     // Add previous head location to vector
     body.push_back(prev_head_cell);
 
-    if (!growing)
+    if (!IsGrowing())
     {
         // Remove the tail from the vector.
         body.erase(body.begin());
     }
     else
     {
-        growing = false;
+        _growing = false;
         size++;
     }
 
@@ -68,12 +68,12 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
     {
         if (current_head_cell.x == item.x && current_head_cell.y == item.y)
         {
-            alive = false;
+            _alive = false;
         }
     }
 }
 
-void Snake::GrowBody() { growing = true; }
+void Snake::GrowBody() { _growing = true; }
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y)
@@ -91,3 +91,7 @@ bool Snake::SnakeCell(int x, int y)
     }
     return false;
 }
+
+bool Snake::IsGrowing() { return _growing; }
+
+bool Snake::IsAlive() const { return _alive; }

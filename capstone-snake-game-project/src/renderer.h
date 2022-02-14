@@ -4,6 +4,9 @@
 #include <vector>
 #include "SDL.h"
 #include "snake.h"
+// #include "game.h" // Don't know why it's not working with the include
+
+class Game;
 
 class Renderer
 {
@@ -12,7 +15,7 @@ public:
              const std::size_t grid_width, const std::size_t grid_height);
     ~Renderer();
 
-    void Render(Snake const snake, SDL_Point const &food);
+    void Render(Snake const snake, SDL_Point const &food, Game const &game);
     void UpdateWindowTitle(int score, int fps);
 
 private:

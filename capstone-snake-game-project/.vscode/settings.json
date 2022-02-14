@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "concourse-pipeline-yaml": "**/*template.yml|**/pipelines/*.yml",
+        "iostream": "cpp"
+    }
+}

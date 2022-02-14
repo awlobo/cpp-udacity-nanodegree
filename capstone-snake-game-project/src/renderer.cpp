@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "game.h"
 #include <iostream>
 #include <string>
 
@@ -15,6 +16,11 @@ Renderer::Renderer(const std::size_t screen_width,
     {
         std::cerr << "SDL could not initialize.\n";
         std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+    }
+
+    if (TTF_Init() == -1)
+    {
+        std::cerr << "TTF_Init error: " << TTF_GetError() << "\n";
     }
 
     // Create Window
@@ -43,7 +49,7 @@ Renderer::~Renderer()
     SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food)
+void Renderer::Render(Snake const snake, SDL_Point const &food, Game const &game)
 {
     SDL_Rect block;
     block.w = screen_width / grid_width;
@@ -52,6 +58,46 @@ void Renderer::Render(Snake const snake, SDL_Point const &food)
     // Clear screen
     SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     SDL_RenderClear(sdl_renderer);
+
+    // Render Pause screen
+    if (game.IsPaused())
+    {
+        std::cout << "Game is paused!\n";
+
+        TTF_Font *font = TTF_OpenFont("res/roboto.ttf", 24);
+        std::string score_text = "score";
+        SDL_Color textColor = {255, 255, 255, 0};
+        SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
+        SDL_Texture *text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
+        int text_width = textSurface->w;
+        int text_height = textSurface->h;
+        SDL_FreeSurface(textSurface);
+        SDL_Rect renderQuad = {20, static_cast<int>(screen_height) - 30, text_width, text_height};
+        SDL_RenderCopy(sdl_renderer, text, NULL, &renderQuad);
+        SDL_DestroyTexture(text);
+
+        // //this opens a font style and sets a size
+        // TTF_Font *Sans = TTF_OpenFont("res/roboto.ttf", 24);
+
+        // SDL_Color White = {255, 255, 255};
+        // SDL_Surface *surfaceMessage =
+        //     TTF_RenderText_Solid(Sans, "PAUSED", White);
+
+        // // now you can convert it into a texture
+        // SDL_Texture *Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+        // SDL_Rect Message_rect; //create a rect
+        // Message_rect.x = 0;    //controls the rect's x coordinate
+        // Message_rect.y = 0;    // controls the rect's y coordinte
+        // Message_rect.w = 100;  // controls the width of the rect
+        // Message_rect.h = 100;  // controls the height of the rect
+
+        // SDL_RenderCopy(sdl_renderer, Message, NULL, &Message_rect);
+
+        // // Don't forget to free your surface and texture
+        // // SDL_FreeSurface(surfaceMessage);
+        // // SDL_DestroyTexture(Message);
+    }
 
     // Render food
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
@@ -71,7 +117,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food)
     // Render snake's head
     block.x = static_cast<int>(snake.head_x) * block.w;
     block.y = static_cast<int>(snake.head_y) * block.h;
-    if (snake.alive)
+    if (snake.IsAlive())
     {
         SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
     }

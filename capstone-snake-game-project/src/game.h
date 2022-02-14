@@ -16,6 +16,11 @@ public:
     int GetScore() const;
     int GetSize() const;
 
+    // Game states
+    bool IsPaused() const;
+    void Pause();
+    void Resume();
+
 private:
     Snake snake;
     SDL_Point food;
@@ -25,7 +30,8 @@ private:
     std::uniform_int_distribution<int> random_w;
     std::uniform_int_distribution<int> random_h;
 
-    int score{0};
+    int _score{0};
+    bool _paused{false}; // Not paused by default
 
     void PlaceFood();
     void Update();

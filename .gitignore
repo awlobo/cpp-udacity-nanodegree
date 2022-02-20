@@ -6,3 +6,4 @@
 draw.cpp
 build/
 bin/
+!capstone-snake-game-project/lib/**/bin

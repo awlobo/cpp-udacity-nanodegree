@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include<SDL2/SDL_ttf.h>
+
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
                    const std::size_t grid_width, const std::size_t grid_height)
@@ -62,41 +64,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Game const &game
     // Render Pause screen
     if (game.IsPaused())
     {
-        std::cout << "Game is paused!\n";
-
-        TTF_Font *font = TTF_OpenFont("res/roboto.ttf", 24);
-        std::string score_text = "score";
-        SDL_Color textColor = {255, 255, 255, 0};
-        SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
-        SDL_Texture *text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
-        int text_width = textSurface->w;
-        int text_height = textSurface->h;
-        SDL_FreeSurface(textSurface);
-        SDL_Rect renderQuad = {20, static_cast<int>(screen_height) - 30, text_width, text_height};
-        SDL_RenderCopy(sdl_renderer, text, NULL, &renderQuad);
-        SDL_DestroyTexture(text);
-
-        // //this opens a font style and sets a size
-        // TTF_Font *Sans = TTF_OpenFont("res/roboto.ttf", 24);
-
-        // SDL_Color White = {255, 255, 255};
-        // SDL_Surface *surfaceMessage =
-        //     TTF_RenderText_Solid(Sans, "PAUSED", White);
-
-        // // now you can convert it into a texture
-        // SDL_Texture *Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-
-        // SDL_Rect Message_rect; //create a rect
-        // Message_rect.x = 0;    //controls the rect's x coordinate
-        // Message_rect.y = 0;    // controls the rect's y coordinte
-        // Message_rect.w = 100;  // controls the width of the rect
-        // Message_rect.h = 100;  // controls the height of the rect
-
-        // SDL_RenderCopy(sdl_renderer, Message, NULL, &Message_rect);
-
-        // // Don't forget to free your surface and texture
-        // // SDL_FreeSurface(surfaceMessage);
-        // // SDL_DestroyTexture(Message);
+        RenderPauseScreen();
     }
 
     // Render food
@@ -135,4 +103,19 @@ void Renderer::UpdateWindowTitle(int score, int fps)
 {
     std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
     SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+void Renderer::RenderPauseScreen()
+{
+    TTF_Font *font = TTF_OpenFont("../res/roboto.ttf", 24);
+    std::string score_text = "PAUSE";
+    SDL_Color textColor = {255, 255, 255, 0};
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
+    SDL_Texture *text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
+    int text_width = textSurface->w;
+    int text_height = textSurface->h;
+    SDL_FreeSurface(textSurface);
+    SDL_Rect renderQuad = {20, static_cast<int>(screen_height) - 30, text_width, text_height};
+    SDL_RenderCopy(sdl_renderer, text, NULL, &renderQuad);
+    SDL_DestroyTexture(text);
 }

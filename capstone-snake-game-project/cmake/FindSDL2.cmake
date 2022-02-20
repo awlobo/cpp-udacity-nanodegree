@@ -74,7 +74,7 @@ SET(SDL2_SEARCH_PATHS
 	/opt/local # DarwinPorts
 	/opt/csw # Blastwave
 	/opt
-    ${PROJECT_SOURCE_DIR}/lib/SDL2-2.0.20
+    ${PROJECT_SOURCE_DIR}/lib/SDL2
 )
 
 FIND_PATH(SDL2_INCLUDE_DIRS SDL2/SDL.h

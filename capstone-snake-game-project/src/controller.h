@@ -1,6 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include<SDL2/SDL.h>
+
 #include "snake.h"
 // #include "game.h" // Don't know why it's not working with the include
 

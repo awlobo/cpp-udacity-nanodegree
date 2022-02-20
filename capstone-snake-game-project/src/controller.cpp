@@ -1,6 +1,7 @@
 #include "controller.h"
+
 #include <iostream>
-#include "SDL.h"
+
 #include "game.h"
 #include "snake.h"
 

@@ -23,6 +23,8 @@ In this project, you can build your own C++ application or extend this Snake gam
 * SDL2 >= 2.0
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
   >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.
+  * Linux: `sudo apt install -y libsdl2-dev`
+  * Windows: libraries for MinGW included in the `lib` folder
 * SDL2-TTF >= 2.0
   * Linux: `sudo apt install libsdl2-ttf-dev`
 * gcc/g++ >= 5.4
@@ -34,11 +36,17 @@ In this project, you can build your own C++ application or extend this Snake gam
 
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./SnakeGame`.
+3. Compile:
+   1. Linux: `cmake .. && make`
+   2. Windows: **With MingGW** -> `cmake .. -G "MinGW Makefiles" && mingw32-make`
+4. Run it:
+   1. Linux: `./SnakeGame`
+   2. Windows: `./SnakeGame.exe`
 
 ## New Features
 
+* Add support for Windows
+  * Add SDL2 libraries to project folder `lib`
 * Toggle Pause and Resume with Esc key
 
 ## Rubric Points

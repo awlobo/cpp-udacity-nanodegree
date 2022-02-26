@@ -33,6 +33,7 @@ private:
 
     int _score{0};
     bool _paused{false}; // Not paused by default
+    bool _running{true};
 
     void PlaceFood();
     void Update();

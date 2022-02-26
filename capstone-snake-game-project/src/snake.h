@@ -2,6 +2,7 @@
 #define SNAKE_H
 
 #include <vector>
+
 #include <SDL2/SDL.h>
 
 class Snake

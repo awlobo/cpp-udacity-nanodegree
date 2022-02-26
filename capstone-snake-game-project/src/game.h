@@ -2,7 +2,8 @@
 #define GAME_H
 
 #include <random>
-#include<SDL2/SDL.h>
+
+#include <SDL2/SDL.h>
 
 #include "controller.h"
 #include "renderer.h"

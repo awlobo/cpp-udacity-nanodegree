@@ -1,9 +1,11 @@
 #include "renderer.h"
-#include "game.h"
+
 #include <iostream>
 #include <string>
 
 #include <SDL2/SDL_ttf.h>
+
+#include "game.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,

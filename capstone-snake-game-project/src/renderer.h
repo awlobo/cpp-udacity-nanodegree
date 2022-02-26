@@ -2,7 +2,8 @@
 #define RENDERER_H
 
 #include <vector>
-#include<SDL2/SDL.h>
+
+#include <SDL2/SDL.h>
 
 #include "snake.h"
 // #include "game.h" // Don't know why it's not working with the include

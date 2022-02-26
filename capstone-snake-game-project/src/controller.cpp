@@ -49,6 +49,10 @@ void Controller::HandleInput(bool &running, Snake &snake, Game &game) const
             case SDLK_ESCAPE: // ESC key
                 game.IsPaused() ? game.Resume() : game.Pause();
                 break;
+
+            case SDLK_q: // Q key
+                running = false;
+                break;
             }
         }
     }

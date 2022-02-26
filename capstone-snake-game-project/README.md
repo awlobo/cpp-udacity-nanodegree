@@ -40,11 +40,16 @@ In this project, you can build your own C++ application or extend this Snake gam
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile:
-   1. Linux: `cmake .. && make`
-   2. Windows: **With MingGW** -> `cmake .. -G "MinGW Makefiles" && mingw32-make`
+   1. Linux and macOS:
+      * `cmake .. && make` or
+      * `cmake .. && cmake --build .` or
+      * `cmake -B build && cmake --build build/`
+   2. Windows: **With MingGW**
+      * `cmake .. -G "MinGW Makefiles" && mingw32-make`
 4. Run it:
-   1. Linux: `./SnakeGame`
-   2. Windows: `./SnakeGame.exe`
+   1. Linux: `./SnakeGame` or simply run `make`
+   2. macOS: `./SnakeGame`
+   3. Windows: `./SnakeGame.exe`
 
 ## New Features
 
@@ -73,7 +78,6 @@ In this project, you can build your own C++ application or extend this Snake gam
    2. game.h: lines 18, 19, 32, 17
 
 ## CC Attribution-ShareAlike 4.0 International
-
 
 Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 

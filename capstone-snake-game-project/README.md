@@ -51,6 +51,8 @@ In this project, you can build your own C++ application or extend this Snake gam
 * Add support for Windows
   * Add SDL2 libraries to project folder `lib`
 * Toggle Pause and Resume with Esc key
+* Display score when game is over
+* Press `Q` to quit the game
 
 ## Rubric Points
 

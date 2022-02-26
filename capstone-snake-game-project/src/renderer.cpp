@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include<SDL2/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -107,15 +107,12 @@ void Renderer::UpdateWindowTitle(int score, int fps)
 
 void Renderer::RenderPauseScreen()
 {
-    TTF_Font *font = TTF_OpenFont("../res/roboto.ttf", 24);
-    std::string score_text = "PAUSE";
-    SDL_Color textColor = {255, 255, 255, 0};
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, score_text.c_str(), textColor);
+    SDL_Surface *textSurface = TTF_RenderText_Solid(
+        TTF_OpenFont("../res/roboto.ttf", 24), "PAUSE", {255, 255, 255, 0});
     SDL_Texture *text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
-    int text_width = textSurface->w;
-    int text_height = textSurface->h;
     SDL_FreeSurface(textSurface);
-    SDL_Rect renderQuad = {20, static_cast<int>(screen_height) - 30, text_width, text_height};
+    SDL_Rect renderQuad = {
+        20, static_cast<int>(screen_height) - 30, textSurface->w, textSurface->h};
     SDL_RenderCopy(sdl_renderer, text, NULL, &renderQuad);
     SDL_DestroyTexture(text);
 }

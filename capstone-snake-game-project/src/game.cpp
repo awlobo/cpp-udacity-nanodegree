@@ -81,6 +81,10 @@ void Game::Update()
 
     if (!snake.IsAlive())
     {
+        std::string msgText{"Score: " + std::to_string(_score) + "\n Size: " + std::to_string(snake.size)};
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "GAME OVER!", msgText.c_str(), NULL);
+        // Stops the game & prevents the MessageBox from appearing again
+        _running = false;
         return;
     }
 

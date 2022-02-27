@@ -12,6 +12,33 @@ In this project, you can build your own C++ application or extend this Snake gam
 
 <img src="docs/structure.png"/>
 
+```bash
+ROOT
+├── src  # Contain the main source files of the project
+│   ├── main.cpp # The main file used to compile the project
+│   ├── snake.h # Header for snake class
+│   ├── snake.cpp # Functions for class that create snake's behaviour
+│   ├── controller.h # Class that helps to capture user input
+│   ├── controller.cpp # Contains functions for controller class
+│   ├── game.h # Game class that helps to run the main game loop
+│   ├── game.cpp # Functions for game class
+│   ├── renderer.h # Contains defines class for SDL2 renderer
+│   └── renderer.cpp # Function definitions for renderer class
+├── docs  # Contain project related documentation
+│   └── structure.png # Image with the basic structire of the project
+├── lib  # Contain SDL2 libraries fow Windows
+│   ├── SDL2 # Libraries for SDL2 (Windows)
+│   └── SDL2TTf # Libraries for SDL2TTF (Windows)
+├── res  # Contain resources for the game
+│   └── roboto.ttf # Font used for the game
+├── CMakeLists.txt # CMakeList for compiling the project
+├── cmake # Folder that contains cmake files
+│   └── FindSDL2.cmake # cmake file for proper linking of SDL2 library to the project
+│   └── FindSDL2TTF.cmake # cmake file for proper linking of SDL2TTF library to the project
+├── Makefile # (Only tested in Linux) Cmake wrapper for compiling/running/cleaning/debugging the project
+└── README.md # The markdown file for explanation of the project
+```
+
 ## Dependencies for Running Locally
 
 * cmake >= 3.7
@@ -53,11 +80,18 @@ In this project, you can build your own C++ application or extend this Snake gam
 
 ## New Features
 
-* Add support for Windows
-  * Add SDL2 libraries to project folder `lib`
-* Toggle Pause and Resume with Esc key
-* Display score when game is over
+* Add support for Windows and macOS
+  * Windows - Add SDL2 libraries to project folder `lib`
+* Toggle Pause and Resume with `Esc` key
+* Display score and snake length when game is over
 * Press `Q` to quit the game
+* The snake can no longer turn back on itself (Small bug fix)
+  * When two arrow keys were pressed quickly it was possible for the snake to do a 180 degree turn and die. Fixed by ignoring inputs until the snake has moved at least one tile.
+* Poison (red squares)
+  * 15% chance of spawning
+  * Reduces speed to 0.2
+  * Reverses direction
+  * Effect lasts until snake eats food
 
 ## Rubric Points
 
@@ -76,6 +110,14 @@ In this project, you can build your own C++ application or extend this Snake gam
 5. The project uses Object Oriented Programming techniques:
    1. game.cpp: line 108
    2. game.h: lines 18, 19, 32, 17
+
+## Ideas for the future
+
+* Multiplayer
+  * Two players can play against each other
+* Add Menu window with options to start a new game, quit, etc.
+* Retry button
+  * Pressing the retry button will reset the game after you die
 
 ## CC Attribution-ShareAlike 4.0 International
 

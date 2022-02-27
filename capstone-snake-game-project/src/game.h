@@ -23,9 +23,13 @@ public:
     void Pause();
     void Resume();
 
+    void SetSpawnPoison();
+    bool SpawnPoison() const;
+
 private:
     Snake snake;
     SDL_Point food;
+    SDL_Point poison;
 
     std::random_device dev;
     std::mt19937 engine;
@@ -35,8 +39,10 @@ private:
     int _score{0};
     bool _paused{false}; // Not paused by default
     bool _running{true};
+    bool _spawnPoison{false};
 
     void PlaceFood();
+    void PlacePoison();
     void Update();
 };
 

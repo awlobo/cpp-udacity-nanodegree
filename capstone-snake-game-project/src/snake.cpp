@@ -93,6 +93,8 @@ bool Snake::SnakeCell(int x, int y)
     return false;
 }
 
-bool Snake::IsGrowing() { return _growing; }
-
 bool Snake::IsAlive() const { return _alive; }
+
+void Snake::SetPoisoned(const bool &value) { _poisoned = value; }
+
+bool Snake::IsPoisoned() const { return _poisoned; }

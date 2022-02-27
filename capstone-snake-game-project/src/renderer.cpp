@@ -53,7 +53,7 @@ Renderer::~Renderer()
     SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food, Game const &game)
+void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const &poison, Game const &game)
 {
     SDL_Rect block;
     block.w = screen_width / grid_width;
@@ -70,13 +70,29 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Game const &game
     }
 
     // Render food
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 255, 94, 1); // Green
     block.x = food.x * block.w;
     block.y = food.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
 
+    if (game.SpawnPoison())
+    {
+        // Render poison
+        SDL_SetRenderDrawColor(sdl_renderer, 255, 0, 71, 1); // Red
+        block.x = poison.x * block.w;
+        block.y = poison.y * block.h;
+        SDL_RenderFillRect(sdl_renderer, &block);
+    }
+
     // Render snake's body
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    if (snake.IsPoisoned())
+    {
+        SDL_SetRenderDrawColor(sdl_renderer, 161, 27, 245, 1); // Purple
+    }
+    else
+    {
+        SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White
+    }
     for (SDL_Point const &point : snake.body)
     {
         block.x = point.x * block.w;

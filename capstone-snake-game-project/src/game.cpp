@@ -27,7 +27,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
         // Input, Update, Render - the main game loop.
         controller.HandleInput(_running, snake, *this);
         Update();
-        renderer.Render(snake, food, *this);
+        renderer.Render(snake, food, poison, *this);
 
         frame_end = SDL_GetTicks();
 
@@ -68,6 +68,50 @@ void Game::PlaceFood()
             food.x = x;
             food.y = y;
             return;
+        }
+    }
+}
+
+void Game::PlacePoison()
+{
+    int x, y;
+    while (true)
+    {
+        x = random_w(engine);
+        y = random_h(engine);
+        // Check that the location is not occupied by a snake item
+        // or food before placing poison
+        if (!snake.SnakeCell(x, y) && !(x == food.x && y == food.y))
+        {
+            poison.x = x;
+            poison.y = y;
+            return;
+        }
+    }
+}
+
+bool Game::SpawnPoison() const
+{
+    return _spawnPoison;
+}
+
+void Game::SetSpawnPoison()
+{
+    if (!_spawnPoison)
+    {
+        srand(time(NULL));
+
+        // generate secret number between 1 and 100
+        int randomNumber = rand() % 100 + 1;
+
+        // If number is below 15, there will be posion
+        if (randomNumber <= 75)
+        {
+            _spawnPoison = true;
+        }
+        else
+        {
+            _spawnPoison = false;
         }
     }
 }

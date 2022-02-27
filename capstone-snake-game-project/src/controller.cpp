@@ -8,8 +8,17 @@
 void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
                                  Snake::Direction opposite) const
 {
-    if (snake.direction != opposite || snake.size == 1)
-        snake.direction = input;
+    if (snake.IsPoisoned())
+    {
+        // Go to the opposite direction if snakes is poisoned
+        if (snake.direction != input || snake.size == 1)
+            snake.direction = opposite;
+    }
+    else
+    {
+        if (snake.direction != opposite || snake.size == 1)
+            snake.direction = input;
+    }
     return;
 }
 

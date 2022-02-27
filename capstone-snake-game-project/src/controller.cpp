@@ -10,16 +10,21 @@ void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
 {
     if (snake.IsPoisoned())
     {
-        // Go to the opposite direction if snakes is poisoned
-        if (snake.direction != input || snake.size == 1)
+        // Go to the opposite direction if snake is poisoned
+        if (snake.direction != input || snake.GetSize() == 1)
             snake.direction = opposite;
     }
     else
     {
-        if (snake.direction != opposite || snake.size == 1)
+        if (snake.direction != opposite || snake.GetSize() == 1)
             snake.direction = input;
     }
     return;
+}
+
+bool Controller::IsDirectionKeyPressed(SDL_Keycode key) const
+{
+    return key == SDLK_UP || key == SDLK_DOWN || key == SDLK_LEFT || key == SDLK_RIGHT;
 }
 
 void Controller::HandleInput(bool &running, Snake &snake, Game &game) const
@@ -33,10 +38,11 @@ void Controller::HandleInput(bool &running, Snake &snake, Game &game) const
         }
         else if (e.type == SDL_KEYDOWN)
         {
-            if (snake.Moved()) // Prevents snake from moving too fast
+            auto keyPressed = e.key.keysym.sym;
+            if (snake.Moved() || !IsDirectionKeyPressed(keyPressed)) // Prevents snake from moving too fast
             {
                 snake.SetMoved(false);
-                switch (e.key.keysym.sym)
+                switch (keyPressed)
                 {
                 case SDLK_UP:
                     ChangeDirection(snake, Snake::Direction::kUp,

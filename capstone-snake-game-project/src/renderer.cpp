@@ -75,7 +75,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, SDL_Point const 
     block.y = food.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
 
-    if (game.SpawnPoison())
+    if (game.GetSpawnPoison())
     {
         // Render poison
         SDL_SetRenderDrawColor(sdl_renderer, 255, 0, 71, 1); // Red

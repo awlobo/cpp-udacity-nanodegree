@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <memory>
 #include <random>
 
 #include <SDL2/SDL.h>
@@ -15,8 +16,9 @@ public:
     Game(std::size_t grid_width, std::size_t grid_height);
     void Run(Controller const &controller, Renderer &renderer,
              std::size_t target_frame_duration);
+
     int GetScore() const;
-    int GetSize() const;
+    std::shared_ptr<Snake> GetSnake() const;
 
     // Game states
     bool IsPaused() const;
@@ -24,10 +26,12 @@ public:
     void Resume();
 
     void SetSpawnPoison();
-    bool SpawnPoison() const;
+    bool GetSpawnPoison() const;
 
 private:
-    Snake snake;
+    std::shared_ptr<Snake> snake;
+
+    // Snake snake;
     SDL_Point food;
     SDL_Point poison;
 
@@ -37,12 +41,15 @@ private:
     std::uniform_int_distribution<int> random_h;
 
     int _score{0};
-    bool _paused{false}; // Not paused by default
     bool _running{true};
+    bool _paused{false}; // Not paused by default
     bool _spawnPoison{false};
 
     void PlaceFood();
+    void CheckFood(const int &x, const int &y);
     void PlacePoison();
+    void CheckPoison(const int &x, const int &y);
+
     void Update();
 };
 

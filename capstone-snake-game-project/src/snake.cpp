@@ -23,24 +23,75 @@ void Snake::Update()
     }
 }
 
+// Inefficient method to check if cell is occupied by snake.
+bool Snake::CheckSnakeCell(int x, int y)
+{
+    if (x == static_cast<int>(head_x) && y == static_cast<int>(head_y))
+    {
+        return true;
+    }
+    for (auto const &item : body)
+    {
+        if (x == item.x && y == item.y)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/* ===Snake movement=== */
+
+bool Snake::Moved() const { return _moved; }
+
+void Snake::SetMoved(const bool &value) { _moved = value; }
+
+/* ===Snake status=== */
+
+void Snake::GrowBody() { _growing = true; }
+
+bool Snake::IsGrowing() { return _growing; }
+
+bool Snake::IsAlive() const { return _alive; }
+
+void Snake::SetPoisoned(const bool &value) { _poisoned = value; }
+
+bool Snake::IsPoisoned() const { return _poisoned; }
+
+/* ===Snake features=== */
+
+int Snake::GetSize() const { return _size; }
+
+void Snake::SetSize(const int &newSize) { _size = newSize; }
+
+float Snake::GetSpeed() const { return _speed; }
+
+void Snake::SetSpeed(const float &newSpeed) { _speed = newSpeed; }
+
+float Snake::GetPreviousSpeed() const { return _previousSpeed; }
+
+void Snake::SetPreviousSpeed(const float &newSpeed) { _previousSpeed = newSpeed; }
+
+/* ===Snake body=== */
+
 void Snake::UpdateHead()
 {
     switch (direction)
     {
     case Direction::kUp:
-        head_y -= speed;
+        head_y -= _speed;
         break;
 
     case Direction::kDown:
-        head_y += speed;
+        head_y += _speed;
         break;
 
     case Direction::kLeft:
-        head_x -= speed;
+        head_x -= _speed;
         break;
 
     case Direction::kRight:
-        head_x += speed;
+        head_x += _speed;
         break;
     }
 
@@ -62,7 +113,7 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
     else
     {
         _growing = false;
-        size++;
+        _size++;
     }
 
     // Check if the snake has died.
@@ -74,34 +125,3 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
         }
     }
 }
-
-bool Snake::Moved() const { return _moved; }
-
-void Snake::SetMoved(const bool &value) { _moved = value; }
-
-void Snake::GrowBody() { _growing = true; }
-
-bool Snake::IsGrowing() { return _growing; }
-
-// Inefficient method to check if cell is occupied by snake.
-bool Snake::SnakeCell(int x, int y)
-{
-    if (x == static_cast<int>(head_x) && y == static_cast<int>(head_y))
-    {
-        return true;
-    }
-    for (auto const &item : body)
-    {
-        if (x == item.x && y == item.y)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Snake::IsAlive() const { return _alive; }
-
-void Snake::SetPoisoned(const bool &value) { _poisoned = value; }
-
-bool Snake::IsPoisoned() const { return _poisoned; }

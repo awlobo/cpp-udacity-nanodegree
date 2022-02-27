@@ -49,7 +49,7 @@ ROOT
   * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
 * SDL2 >= 2.0
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
-  >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.
+    >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.
   * Linux: `sudo apt install -y libsdl2-dev`
   * MacOS: `brew install sdl2`
   * Windows: libraries for MinGW included in the `lib` folder
@@ -74,12 +74,13 @@ ROOT
    2. Windows: **With MingGW**
       * `cmake .. -G "MinGW Makefiles" && mingw32-make`
 4. Run it:
-   1. Linux: `./SnakeGame` or simply run `make`
+   1. Linux: `./SnakeGame` or simply run `make` in the root folder
    2. macOS: `./SnakeGame`
    3. Windows: `./SnakeGame.exe`
 
 ## New Features
 
+* Add Makefile wrapper for Cmake (only tested in Linux)
 * Add support for Windows and macOS
   * Windows - Add SDL2 libraries to project folder `lib`
 * Toggle Pause and Resume with `Esc` key
@@ -88,36 +89,67 @@ ROOT
 * The snake can no longer turn back on itself (Small bug fix)
   * When two arrow keys were pressed quickly it was possible for the snake to do a 180 degree turn and die. Fixed by ignoring inputs until the snake has moved at least one tile.
 * Poison (red squares)
-  * 15% chance of spawning
+  * 20% chance of spawning
   * Reduces speed to 0.2
   * Reverses direction
   * Effect lasts until snake eats food
 
 ## Rubric Points
 
-1. The project demonstrates an understanding of C++ functions and control structures:
-   1. main.cpp: lines 11, 18
-   2. game.cpp: lines 97, 78, 108
-   3. renderer.cpp: lines 53, 85
-2. The project reads data from a file and process the data, or the program writes data to a file:
-   1. main.cpp: line 36
-   2. game.cpp: lines 12, 56
-3. The project accepts user input and processes the input:
-   1. main.cpp: line 17
-4. Classes use appropriate access specifiers for class members:
-   1. snake.h: lines 28-29, 43-46
-   2. game.h: lines 18, 19, 32
-5. The project uses Object Oriented Programming techniques:
-   1. game.cpp: line 108
-   2. game.h: lines 18, 19, 32, 17
+### Loops, Functions, I/O
+
+| Criteria                                                                                       | Explanation and link(s)                                                       |
+|------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| The project demonstrates an understanding of C++ functions and control structures.             | The whole project is organized with proper use of functions and flow of data. |
+| The project reads data from a file and process the data, or the program writes data to a file. | X                                                                             |
+| The project accepts user input and processes the input.                                        | X                                                                             |
+
+### Object Oriented Programming
+
+| Criteria                                                                         | Explanation and link(s)                                                                                                                                                                                                                           |
+|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| The project uses Object Oriented Programming techniques.                         | Per the project structure the code uses 4 classes : `Snake`, `Game`, `Controller` and `Renderer`. All the data and the control logic is encapsulated in them.                                                                                     |
+| Classes use appropriate access specifiers for class members.                     | In the classes mentioned above, the data and member functions under private or public access specifiers based on the usability outside the class. Example:  Public - > `snake.h:41 - Snake::GetSize()` Private -> `game.h:47 Game::PlacePoison()` |
+| Class constructors utilize member initialization lists.                          | Several functions ex: Snake constructor -> `snake.h:19`                                                                                                                                                                                           |
+| Classes abstract implementation details from their interfaces.                   | All the header files contains proper documentation of the member functions ex: `snake.h` or `snake.cpp`                                                                                                                                           |
+| Classes encapsulate behavior.                                                    | Contains private accesed by public getters and setters -> `GetSpeed() and SetSpeed snake.h:43-44 and 64`, or  `IsPoisoned() SetPoisoned -> snake.h:37-38`                                                                                         |
+| Classes follow an appropriate inheritance hierarchy.                             | X                                                                                                                                                                                                                                                 |
+| Overloaded functions allow the same function to operate on different parameters. | `UpdateHead() -> snake.h:68-69`                                                                                                                                                                                                                   |
+| Derived class functions override virtual base class functions.                   | X                                                                                                                                                                                                                                                 |
+| Templates generalize functions in the project.                                   | X                                                                                                                                                                                                                                                 |
+
+### Memory Management
+
+| Criteria                                                                                  | Explanation and link(s)                                                                                        |
+|-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| The project makes use of references in function declarations.                             | CheckFood `game.h:46` and CheckPoison `game.h:48` use pass by reference                                        |
+| The project uses destructor(s) appropriately.                                             | Destructor for `Renderer -Z renderer.h:17` is used to close the window and perform cleanup after the game ends |
+| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | X                                                                                                              |
+| The project follows the Rule of 5.                                                        | X                                                                                                              |
+| The project uses move semantics to move data, instead of copying it, where possible.      | X                                                                                                              |
+| The project uses smart pointers instead of raw pointers.                                  | `snake` is a `shared_ptr` in `game.h:32`                                                                       |
+
+### Concurrency
+
+| Criteria                                     | Explanation and link(s) |
+|----------------------------------------------|-------------------------|
+| The project uses multithreading.             | X                       |
+| A promise and future is used in the project. | X                       |
+| A mutex or lock is used in the project.      | X                       |
+| A condition variable is used in the project. | X                       |
 
 ## Ideas for the future
 
 * Multiplayer
   * Two players can play against each other
-* Add Menu window with options to start a new game, quit, etc.
+* Menu window
+  * Options to start a new game, quit, change grid size etc.
+* Food
+  * Different types of food (poisom food, potions, etc)
 * Retry button
   * Pressing the retry button will reset the game after you die
+* High Scores
+  * The game will save the high scores to a file
 
 ## CC Attribution-ShareAlike 4.0 International
 

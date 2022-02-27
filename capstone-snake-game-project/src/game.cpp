@@ -3,7 +3,7 @@
 #include <iostream>
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : snake(grid_width, grid_height),
+    : snake(new Snake(grid_width, grid_height)),
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1))
@@ -25,9 +25,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
         frame_start = SDL_GetTicks();
 
         // Input, Update, Render - the main game loop.
-        controller.HandleInput(_running, snake, *this);
+        controller.HandleInput(_running, *snake.get(), *this);
         Update();
-        renderer.Render(snake, food, poison, *this);
+        renderer.Render(*snake.get(), food, poison, *this);
 
         frame_end = SDL_GetTicks();
 
@@ -63,7 +63,7 @@ void Game::PlaceFood()
         y = random_h(engine);
         // Check that the location is not occupied by a snake item before placing
         // food.
-        if (!snake.SnakeCell(x, y))
+        if (!snake->CheckSnakeCell(x, y))
         {
             food.x = x;
             food.y = y;
@@ -81,7 +81,7 @@ void Game::PlacePoison()
         y = random_h(engine);
         // Check that the location is not occupied by a snake item
         // or food before placing poison
-        if (!snake.SnakeCell(x, y) && !(x == food.x && y == food.y))
+        if (!snake->CheckSnakeCell(x, y) && !(x == food.x && y == food.y))
         {
             poison.x = x;
             poison.y = y;
@@ -90,7 +90,7 @@ void Game::PlacePoison()
     }
 }
 
-bool Game::SpawnPoison() const
+bool Game::GetSpawnPoison() const
 {
     return _spawnPoison;
 }
@@ -101,11 +101,11 @@ void Game::SetSpawnPoison()
     {
         srand(time(NULL));
 
-        // generate secret number between 1 and 100
+        // Generate secret number between 1 and 100
         int randomNumber = rand() % 100 + 1;
 
-        // If number is below 15, there will be posion
-        if (randomNumber <= 75)
+        // If number is below 20, there will be poison
+        if (randomNumber <= 20)
         {
             _spawnPoison = true;
         }
@@ -123,56 +123,67 @@ void Game::Update()
         return;
     }
 
-    if (!snake.IsAlive())
+    if (!snake->IsAlive())
     {
-        std::string msgText{"Score: " + std::to_string(_score) + "\n Size: " + std::to_string(snake.size)};
+        std::string msgText{"Score: " + std::to_string(_score) + "\n Size: " + std::to_string(snake->GetSize())};
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "GAME OVER!", msgText.c_str(), NULL);
         // Stops the game & prevents the MessageBox from appearing again
         _running = false;
         return;
     }
 
-    snake.Update();
+    snake->Update();
 
-    int new_x = static_cast<int>(snake.head_x);
-    int new_y = static_cast<int>(snake.head_y);
+    int new_x = static_cast<int>(snake->head_x);
+    int new_y = static_cast<int>(snake->head_y);
 
+    CheckFood(new_x, new_y);
+    CheckPoison(new_x, new_y);
+}
+
+void Game::CheckFood(const int &x, const int &y)
+{
     // Check if there's food over here
-    if (food.x == new_x && food.y == new_y)
+    if (food.x == x && food.y == y)
     {
         _score++;
         PlaceFood();
-        // Grow snake and increase speed.
-        snake.GrowBody();
-        snake.SetPoisoned(false);
-        if (snake.previousSpeed != snake.speed)
+        // Grow and cure snake and increase speed
+        snake->GrowBody();
+        snake->SetPoisoned(false);
+        _spawnPoison = false;
+        if (snake->GetPreviousSpeed() != snake->GetSpeed())
         {
-            snake.speed = snake.previousSpeed;
+            // Resets the speed after eating poison
+            snake->SetSpeed(snake->GetPreviousSpeed());
         }
         else
         {
-            snake.speed += 0.02;
-            snake.previousSpeed = snake.speed;
+            auto newSpeed = snake->GetSpeed();
+            snake->SetSpeed(newSpeed += 0.01);
+            snake->SetPreviousSpeed(snake->GetSpeed());
         }
 
         SetSpawnPoison();
-        if (SpawnPoison())
+        if (GetSpawnPoison())
         {
             PlacePoison();
         }
     }
+}
 
-    if (SpawnPoison())
+// Check if there's poison over here and only if there's poison in the board
+void Game::CheckPoison(const int &x, const int &y)
+{
+    if (GetSpawnPoison())
     {
-        if (poison.x == new_x && poison.y == new_y)
+        if (poison.x == x && poison.y == y)
         {
             _spawnPoison = false;
-            std::cout << "Poison eaten" << std::endl;
-            snake.SetPoisoned(true);
-            snake.previousSpeed = snake.speed;
-            snake.speed = 0.1;
+            snake->SetPoisoned(true);
+            snake->SetPreviousSpeed(snake->GetSpeed());
+            snake->SetSpeed(0.1);
             _score--;
-            // reverse directions
         }
     }
 }
@@ -183,6 +194,6 @@ void Game::Resume() { _paused = false; }
 
 int Game::GetScore() const { return _score; }
 
-int Game::GetSize() const { return snake.size; }
-
 bool Game::IsPaused() const { return _paused; }
+
+std::shared_ptr<Snake> Game::GetSnake() const { return snake; }

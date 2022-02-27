@@ -109,8 +109,11 @@ void Renderer::UpdateWindowTitle(int score, int fps)
 
 void Renderer::RenderPauseScreen()
 {
-    SDL_Surface *textSurface = TTF_RenderText_Solid(
-        TTF_OpenFont("../res/roboto.ttf", 24), "PAUSE", {255, 255, 255, 0});
+    TTF_Font *font = TTF_OpenFont("res/roboto.ttf", 24);
+    SDL_Color white = {255, 255, 255};
+    SDL_Surface *textSurface =
+        TTF_RenderText_Solid(font, "PAUSE", white);
+
     SDL_Texture *text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
     SDL_FreeSurface(textSurface);
     SDL_Rect renderQuad = {

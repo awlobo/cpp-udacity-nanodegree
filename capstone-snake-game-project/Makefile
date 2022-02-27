@@ -2,15 +2,21 @@ RM    := rm -rf
 MKDIR := mkdir -p
 RUN   := ./build/SnakeGame
 
-all: ./build/Makefile
-	@ $(MAKE) -C build
-	  $(RUN)
+.PHONY: all build run
 
+all: build run
 
-./build/Makefile:
+build:
 	@ ($(MKDIR) build > /dev/null)
-	@ (cd build > /dev/null 2>&1 && cmake ..)
+	@ cmake -B build
+	@ cmake --build ./build/
 
+run:
+	$(RUN)
+
+debug:
+	@ cmake -S . -B debug -DCMAKE_BUILD_TYPE=Debug
+	@ cmake --build debug
 
 clean:
 	@- $(RM) ./build/*

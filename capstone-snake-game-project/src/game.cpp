@@ -144,20 +144,45 @@ void Game::Update()
         PlaceFood();
         // Grow snake and increase speed.
         snake.GrowBody();
-        snake.speed += 0.02;
+        snake.SetPoisoned(false);
+        if (snake.previousSpeed != snake.speed)
+        {
+            snake.speed = snake.previousSpeed;
+        }
+        else
+        {
+            snake.speed += 0.02;
+            snake.previousSpeed = snake.speed;
+        }
+
+        SetSpawnPoison();
+        if (SpawnPoison())
+        {
+            PlacePoison();
+        }
+    }
+
+    if (SpawnPoison())
+    {
+        if (poison.x == new_x && poison.y == new_y)
+        {
+            _spawnPoison = false;
+            std::cout << "Poison eaten" << std::endl;
+            snake.SetPoisoned(true);
+            snake.previousSpeed = snake.speed;
+            snake.speed = 0.1;
+            _score--;
+            // reverse directions
+        }
     }
 }
 
-void Game::Pause()
-{
-    _paused = true;
-}
+void Game::Pause() { _paused = true; }
 
-void Game::Resume()
-{
-    _paused = false;
-}
+void Game::Resume() { _paused = false; }
 
 int Game::GetScore() const { return _score; }
+
 int Game::GetSize() const { return snake.size; }
+
 bool Game::IsPaused() const { return _paused; }

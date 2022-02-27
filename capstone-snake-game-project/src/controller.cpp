@@ -33,35 +33,39 @@ void Controller::HandleInput(bool &running, Snake &snake, Game &game) const
         }
         else if (e.type == SDL_KEYDOWN)
         {
-            switch (e.key.keysym.sym)
+            if (snake.Moved()) // Prevents snake from moving too fast
             {
-            case SDLK_UP:
-                ChangeDirection(snake, Snake::Direction::kUp,
-                                Snake::Direction::kDown);
-                break;
+                snake.SetMoved(false);
+                switch (e.key.keysym.sym)
+                {
+                case SDLK_UP:
+                    ChangeDirection(snake, Snake::Direction::kUp,
+                                    Snake::Direction::kDown);
+                    break;
 
-            case SDLK_DOWN:
-                ChangeDirection(snake, Snake::Direction::kDown,
-                                Snake::Direction::kUp);
-                break;
+                case SDLK_DOWN:
+                    ChangeDirection(snake, Snake::Direction::kDown,
+                                    Snake::Direction::kUp);
+                    break;
 
-            case SDLK_LEFT:
-                ChangeDirection(snake, Snake::Direction::kLeft,
-                                Snake::Direction::kRight);
-                break;
+                case SDLK_LEFT:
+                    ChangeDirection(snake, Snake::Direction::kLeft,
+                                    Snake::Direction::kRight);
+                    break;
 
-            case SDLK_RIGHT:
-                ChangeDirection(snake, Snake::Direction::kRight,
-                                Snake::Direction::kLeft);
-                break;
+                case SDLK_RIGHT:
+                    ChangeDirection(snake, Snake::Direction::kRight,
+                                    Snake::Direction::kLeft);
+                    break;
 
-            case SDLK_ESCAPE: // ESC key
-                game.IsPaused() ? game.Resume() : game.Pause();
-                break;
+                case SDLK_ESCAPE: // ESC key pauses the game
+                    game.IsPaused() ? game.Resume() : game.Pause();
+                    break;
 
-            case SDLK_q: // Q key
-                running = false;
-                break;
+                case SDLK_q: // Q key quits the game
+                    running = false;
+                    break;
+                }
             }
         }
     }

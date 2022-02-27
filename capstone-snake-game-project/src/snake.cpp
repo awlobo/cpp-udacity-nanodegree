@@ -19,6 +19,7 @@ void Snake::Update()
     if (current_cell.x != prev_cell.x || current_cell.y != prev_cell.y)
     {
         UpdateBody(current_cell, prev_cell);
+        SetMoved(true);
     }
 }
 
@@ -74,7 +75,13 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell)
     }
 }
 
+bool Snake::Moved() const { return _moved; }
+
+void Snake::SetMoved(const bool &value) { _moved = value; }
+
 void Snake::GrowBody() { _growing = true; }
+
+bool Snake::IsGrowing() { return _growing; }
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y)

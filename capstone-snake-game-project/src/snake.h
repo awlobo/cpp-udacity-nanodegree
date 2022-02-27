@@ -47,6 +47,7 @@ private:
     void UpdateHead();
     void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
 
+    bool _moved{true};
     bool _growing{false};
     bool _alive{true};
     bool _poisoned{false};

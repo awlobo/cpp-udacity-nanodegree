@@ -17,18 +17,22 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 include_directories(src)
 
-# Copy res folder in build directory
+# Copy res folder to build directory
 set (SRC_RES_FOLDER "${CMAKE_SOURCE_DIR}/res")
 set (DEST_RES_FOLDER "${CMAKE_CURRENT_BINARY_DIR}/res")
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SRC_RES_FOLDER} ${DEST_RES_FOLDER} 
-    DEPENDS ${DEST_RES_FOLDER}
-    COMMENT "Create symbolic link for resources folder"
-)
+if (WIN32)
+    file(TO_NATIVE_PATH "${DEST_RES_FOLDER}" _dstDir)
+    file(TO_NATIVE_PATH "${SRC_RES_FOLDER}" _srcDir)
+    execute_process(COMMAND cmd.exe /c mklink /J "${_dstDir}" "${_srcDir}")
+else()
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink ${SRC_RES_FOLDER} ${DEST_RES_FOLDER} 
+        DEPENDS ${DEST_RES_FOLDER}
+        COMMENT "Create symbolic link for resources folder"
+    )
+endif()
 
-# set_target_properties(${PROJECT_NAME} PROPERTIES  
-#     VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/res")
 
 # Copy dll libries in build directory (Only for Windows)
 IF (WIN32)

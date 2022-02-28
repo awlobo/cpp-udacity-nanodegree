@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include <ctime>
 #include <iostream>
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
